@@ -1,0 +1,18 @@
+[package]
+name = "arm64"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+uefi = "0.33.0"
+
+[profile.dev]
+opt-level = 3
+panic = "abort"
+
+[profile.release]
+opt-level = "z"
+panic = "abort"
+
+[build]
+target = "aarch64-unknown-uefi"
