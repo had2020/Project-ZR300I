@@ -1,31 +1,19 @@
-use iso9660::{iso, IsoBuilder, IsoWriter};
-use std::fs;
+use std::fs::File;
+use std::io::{self, Write};
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // define the output ISO file
+fn main() -> io::Result<()> {
+    // Define the output ISO file
     let output_iso = "output.iso";
+    let mut iso_file = File::create(output_iso)?;
 
-    // create a new ISO builder
-    let mut builder = IsoBuilder::new();
+    // write ISO9660 Primary Volume Descriptor
+    iso_file.write_all(b"CD001")?; // magic number ISO9660
+    iso_file.write_all(b"BOOTLOADER")?; // volume label
 
-    // add the EFI directory and boot file
-    builder.add_file(
-        "EFI/BOOT/BOOTAA64.EFI", // BOOTAA64.EFI or BOOTX64.EFI
-        include_bytes!("temp_build_files/BOOTAA64.EFI").as_ref(),
-    )?;
+    // add EFI directory and BOOTAA64.EFI
+    let efi_boot_data = include_bytes!("temp_build_files/BOOTAA64.EFI"); // current build file stored
+    iso_file.write_all(efi_boot_data)?;
 
-    /* TODO kernal
-    // add the OS directory and kernel binary
-    builder.add_file(
-        "OS/kernel.bin",
-        include_bytes!("../../build_files/BOOTX64.EFI").as_ref(),
-    )?;
-    */
-
-    // finalize and write the ISO
-    let mut iso_writer = fs::File::create(output_iso)?;
-    builder.write_to(&mut iso_writer)?;
-
-    println!("ISO file created successfully at {}", output_iso);
+    println!("ISO created successfully: {}", output_iso);
     Ok(())
 }
