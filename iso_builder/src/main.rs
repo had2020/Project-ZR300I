@@ -10,15 +10,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // add the EFI directory and boot file
     builder.add_file(
-        "EFI/BOOT/BOOTX64.EFI", // BOOTAA64.EFI
-        include_bytes!("bootloader_build_files../../files/BOOTX64.EFI").as_ref(),
+        "EFI/BOOT/BOOTAA64.EFI", // BOOTAA64.EFI or BOOTX64.EFI
+        include_bytes!("build_files../../files/BOOTX64.EFI").as_ref(),
     )?;
 
+    /* TODO kernal
     // add the OS directory and kernel binary
     builder.add_file(
         "OS/kernel.bin",
-        include_bytes!("bootloader_build_files../../files/kernel.bin").as_ref(),
+        include_bytes!("build_files../../files/kernel.bin").as_ref(),
     )?;
+    */
 
     // finalize and write the ISO
     let mut iso_writer = fs::File::create(output_iso)?;
