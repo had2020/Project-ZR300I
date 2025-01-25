@@ -4,4 +4,4 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-iso9660 = "0.1.1"
+byteorder = "1.5.0"
