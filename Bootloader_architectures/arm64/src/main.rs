@@ -1,17 +1,19 @@
 #![no_main]
 #![no_std]
 
+use core::panic::PanicInfo;
+use log::info;
 use uefi::prelude::*;
 
-#[entry]
-fn main(_handle: Handle, system_table: SystemTable<Boot>) -> Status {
-    // writing to console
-    system_table.stdout().reset(false).unwrap_success();
-    system_table
-        .stdout()
-        .write_str("Bootloader starting!\n")
-        .unwrap_success();
+#[panic_handler]
+fn panic(_info: &PanicInfo) -> ! {
+    loop {}
+}
 
-    // return success status
-    Status::SUCCESS
+#[entry]
+fn main() -> Status {
+    uefi::helpers::init().unwrap();
+    info!("Bootloader loaded!"); // display
+    boot::stall(10_000_000); // 10 secs
+    Status::SUCCESS // return success
 }

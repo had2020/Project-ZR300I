@@ -4,15 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+log = "0.4.25"
 uefi = "0.33.0"
 
-[profile.dev]
-opt-level = 3
-panic = "abort"
-
-[profile.release]
-opt-level = "z"
-panic = "abort"
-
-[build]
-target = "aarch64-unknown-uefi"
+[toolchain]
+targets = ["aarch64-unknown-uefi", "i686-unknown-uefi", "x86_64-unknown-uefi"]
