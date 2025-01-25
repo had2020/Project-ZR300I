@@ -1,1 +1,3 @@
 /Bootloader_architectures/arm64/target
+/iso_builder/src/temp_build_files
+/iso_builder/target

@@ -11,14 +11,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // add the EFI directory and boot file
     builder.add_file(
         "EFI/BOOT/BOOTAA64.EFI", // BOOTAA64.EFI or BOOTX64.EFI
-        include_bytes!("build_files../../files/BOOTX64.EFI").as_ref(),
+        include_bytes!("temp_build_files/BOOTAA64.EFI").as_ref(),
     )?;
 
     /* TODO kernal
     // add the OS directory and kernel binary
     builder.add_file(
         "OS/kernel.bin",
-        include_bytes!("build_files../../files/kernel.bin").as_ref(),
+        include_bytes!("../../build_files/BOOTX64.EFI").as_ref(),
     )?;
     */
 
