@@ -1,14 +1,15 @@
-# check required directories are made
 mkdir -p temp_build_files
 mkdir -p test/EFI/BOOT
 
-cd Bootloader_architectures/arm64
+cd kernal
+mkdir test
 
-# build the UEFI bootloader
-#cargo build --release --target aarch64-unknown-uefi
 cargo build --release --target aarch64-unknown-uefi -Z build-std
-cp target/aarch64-unknown-uefi/release/arm64.efi ../../temp_build_files/BOOTAA64.EFI
-cd ../../
+
+cp target/aarch64-unknown-uefi/release/kernal.efi ../temp_build_files/BOOTAA64.EFI
+
+cd ../
+
 cp temp_build_files/BOOTAA64.EFI test/EFI/BOOT/BOOTAA64.EFI
 
 # create the ISO using tool
@@ -31,5 +32,3 @@ if [ $? -eq 0 ]; then
 else
   echo "Failed to create ISO"
 fi
-
-rm -r temp_build_files
