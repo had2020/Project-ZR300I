@@ -3,3 +3,4 @@
 /iso_builder/target
 .DS_Store
 /iso_builder/output.iso
+/kernal/target

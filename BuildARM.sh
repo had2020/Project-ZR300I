@@ -6,7 +6,7 @@ cd Bootloader_architectures/arm64
 
 # build the UEFI bootloader
 #cargo build --release --target aarch64-unknown-uefi
-cargo xbuild --release --target aarch64-unknown-uefi
+cargo build --release --target aarch64-unknown-uefi -Z build-std
 cp target/aarch64-unknown-uefi/release/arm64.efi ../../temp_build_files/BOOTAA64.EFI
 cd ../../
 cp temp_build_files/BOOTAA64.EFI test/EFI/BOOT/BOOTAA64.EFI
