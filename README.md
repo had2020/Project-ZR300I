@@ -48,3 +48,5 @@ qemu-system-aarch64-unknown-uefi -enable-kvm \
     -drive format=raw,file=fat:rw:esp
 
 # trying
+
+hdiutil create -size 10m -fs fat32 -volname EFI esp.dmg
