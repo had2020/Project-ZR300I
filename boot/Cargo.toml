@@ -1,0 +1,11 @@
+[package]
+name = "boot"
+version = "0.1.0"
+edition = "2021"
+
+#[profile.release]
+#panic = "abort"
+
+[build]
+build-stage = 1
+target = ["aarch64-unknown-uefi"]
