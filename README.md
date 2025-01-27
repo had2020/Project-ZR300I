@@ -50,3 +50,37 @@ qemu-system-aarch64-unknown-uefi -enable-kvm \
 # trying
 
 hdiutil create -size 10m -fs fat32 -volname EFI esp.dmg
+https://rust-osdev.github.io/uefi-rs/tutorial/hardware.html
+
+# 2
+xorriso -as mkisofs \
+    -o output.iso \
+    -b EFI/BOOT/bootaa64.efi \
+    -no-emul-boot \
+    -efi-boot-part \
+    -efi-boot-image \
+    esp
+
+# 3
+
+xorriso -as mkisofs \
+  -isohybrid-mbr /usr/lib/syslinux/mbr/isohdpfx.bin \
+  -c isolinux/boot.cat \
+  -b isolinux/isolinux.bin \
+  -no-emul-boot \
+  -boot-load-size 4 \
+  -boot-info-table \
+  -eltorito-alt-boot \
+  -e boot/grub/efi.img \
+  -no-emul-boot \
+  -isohybrid-gpt-basdat \
+  -o /path/to/tmp.iso \
+  /path/to/tmp
+
+# 4
+xorriso -as mkisofs \
+  -e esp/efi/boot/bootaa64.efi \
+  -no-emul-boot \
+  -isohybrid-gpt-basdat \
+  -o output.iso \
+  /path/to/source
