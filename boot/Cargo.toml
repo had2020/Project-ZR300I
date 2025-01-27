@@ -9,3 +9,10 @@ edition = "2021"
 [build]
 build-stage = 1
 target = ["aarch64-unknown-uefi"]
+
+[dependencies]
+log = "0.4.21"
+uefi = { version = "0.33.0", features = ["panic_handler", "logger"] }
+
+[toolchain]
+targets = ["aarch64-unknown-uefi", "i686-unknown-uefi", "x86_64-unknown-uefi"]
