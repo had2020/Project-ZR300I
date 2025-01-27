@@ -31,3 +31,5 @@ qemu-system-aarch64 \
 # building with iso with stuff FAILS
 mkfs.fat -C uefi.img 2880
 mcopy -s gen_files/* :: -i uefi.img
+
+# TODO make bootable iso
