@@ -78,9 +78,14 @@ xorriso -as mkisofs \
   /path/to/tmp
 
 # 4
+
 xorriso -as mkisofs \
   -e esp/efi/boot/bootaa64.efi \
   -no-emul-boot \
   -isohybrid-gpt-basdat \
   -o output.iso \
-  /path/to/source
+  iso_root
+
+# check
+
+isoinfo -l -i output.iso
