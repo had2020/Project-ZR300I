@@ -119,3 +119,14 @@ xorriso -as mkisofs \
   -efi-boot-part --efi-boot-image \
   -no-emul-boot -isohybrid-gpt-basdat \
   iso/
+
+# testing
+- display
+qemu-system-aarch64 -machine virt -cpu cortex-a57 \
+  -m 1024 -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
+  -cdrom custom-uefi.iso
+
+- no display
+qemu-system-aarch64 -machine virt -cpu cortex-a57 \
+  -m 1024 -bios /usr/share/qemu-efi-aarch64/QEMU_EFI.fd \
+  -cdrom custom-uefi.iso -nographic
