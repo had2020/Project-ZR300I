@@ -80,12 +80,42 @@ xorriso -as mkisofs \
 # 4
 
 xorriso -as mkisofs \
-  -e esp/efi/boot/bootaa64.efi \
+  -e EFI/BOOT/BOOTAA64.EFI \
   -no-emul-boot \
   -isohybrid-gpt-basdat \
   -o output.iso \
   iso_root
 
+# 4.1
+
+xorriso -as mkisofs \
+  -iso-level 3 \
+  -volid "UEFI_APP" \
+  -efi-boot-part --efi-boot-image \
+  --no-emul-boot \
+  -efi-boot iso_root/EFI/BOOT/BOOTAA64.EFI \
+  -output output.iso \
+  iso_root/
+
 # check
 
 isoinfo -l -i output.iso
+
+# 5
+genisoimage -o output.iso \
+  -efi-boot esp.img \
+  -no-emul-boot \
+  -volid "UEFI_APP" \
+  -iso-level 3 \
+  iso_root/
+
+# 6
+hdiutil makehybrid -o output.iso iso -iso -joliet -eltorito-boot iso/EFI/BOOT/BOOTAA64.EFI -no-emul-boot
+
+# 7 on linux
+xorriso -as mkisofs \
+  -R -J -c boot.catalog \
+  -o custom-uefi.iso \
+  -efi-boot-part --efi-boot-image \
+  -no-emul-boot -isohybrid-gpt-basdat \
+  iso/
