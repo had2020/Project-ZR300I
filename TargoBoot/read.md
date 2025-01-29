@@ -12,13 +12,5 @@ aarch64-linux-gnu-as -o boot.o boot.s
 
 aarch64-linux-gnu-ld -nostdlib --no-dynamic-linker --section-start=.text=0x100000 -o boot.efi boot.o
 
-# Macos FAILS, use Linux
-``` bash
-brew install llvm
-```
-
-# Assemble boot.s into boot.o
-llvm-mc -triple=aarch64-unknown-none -filetype=obj boot.s -o boot.o
-
-# Link boot.o to produce a bootable EFI executable
-ld.lld -nostdlib --no-dynamic-linker --section-start=.text=0x100000 -o boot.efi boot.o
+# -serial stdio
+qemu-system-aarch64 -machine virt -cpu cortex-a57 -drive file=bootable.iso,format=raw -serial stdio

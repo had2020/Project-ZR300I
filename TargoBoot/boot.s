@@ -1,10 +1,18 @@
 .section .text
 .global _start
-
-// UEFI Entry Point
 _start:
-    // Return to UEFI firmware (Exit Boot Services would be here in a real loader)
-    mov x0, #0         // EFI_SUCCESS (0)
-    mov x8, #0x5F      // UEFI ExitBootServices syscall number
-    svc #0             // Make system call
-    b .               // Loop forever if it returns (should never happen)
+    // load the address of message
+    mov x0, #1           // stdout
+    ldr x1, =message
+    ldr x2, =message_len
+    mov x8, #64          // write syscall
+    svc #0               // call UEFI service
+
+loop:
+    wfe                  // wait for event, low-power halt
+    b loop               // infinite loop
+
+.section .data
+message:
+    .ascii "UEFI Boot Successful!\n"
+message_len = . - message
