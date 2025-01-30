@@ -26,3 +26,9 @@ qemu-system-aarch64 -machine virt -cpu cortex-a57 -drive file=bootable.iso,forma
 brew install aarch64-elf-gcc
 
 # Steps
+
+# Assemble
+aarch64-elf-as -o boot.o boot.s
+
+# Link
+aarch64-elf-ld -nostdlib --no-dynamic-linker --section-start=.text=0x100000 -o boot.efi boot.o
