@@ -1,3 +1,5 @@
+LINUX ONLY
+
 aarch64-linux-gnu-as -o boot.o boot.s
 aarch64-linux-gnu-ld -nostdlib --no-dynamic-linker --section-start=.text=0x100000 -o boot.efi boot.o
 
