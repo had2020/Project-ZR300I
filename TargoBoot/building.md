@@ -53,9 +53,12 @@ sudo cp BOOTAA64.EFI mounted/EFI/BOOT/
 diskutil unmount mounted/
 
 # detach disk
-hdiutil detach /dev/diskN
+hdiutil detach /dev/diskN - use N for disk number seen at hdiutil info
 
 # Convert back to img
 hdiutil convert boot.img.dmg -format UDTO -o boot.img
 
 mv boot.img.cdr boot.img
+
+# Testing
+qemu-system-aarch64 -machine virt -cpu cortex-a72 -drive file=boot.img,format=raw -serial stdio
