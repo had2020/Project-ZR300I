@@ -24,7 +24,8 @@ qemu-system-aarch64 -machine virt -cpu cortex-a57 -drive file=bootable.iso,forma
 ## MACOS
 # Install
 brew install aarch64-elf-gcc
-
+brew install coreutils
+brew install dosfstools
 # Steps
 
 # Assemble
@@ -32,3 +33,29 @@ aarch64-elf-as -o boot.o boot.s
 
 # Link
 aarch64-elf-ld -nostdlib --no-dynamic-linker --section-start=.text=0x100000 -o boot.efi boot.o
+
+# Move and copy EFI file
+mv boot.efi BOOTAA64.EFI
+mkdir -p iso/EFI/BOOT/
+cp BOOTAA64.EFI iso/EFI/BOOT/
+
+# Create a 100MB image file (install coreutils if needed):
+hdiutil create -size 100m -fs FAT32 -volname "BOOT" boot.img
+
+# Attach (mount) the image:
+hdiutil attach boot.img.dmg -mountpoint mounted/
+
+# Create directories and copy files:
+sudo mkdir -p mounted/EFI/BOOT
+sudo cp BOOTAA64.EFI mounted/EFI/BOOT/
+
+# Unmount the image:
+diskutil unmount mounted/
+
+# detach disk
+hdiutil detach /dev/diskN
+
+# Convert back to img
+hdiutil convert boot.img.dmg -format UDTO -o boot.img
+
+mv boot.img.cdr boot.img
