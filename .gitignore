@@ -1,2 +1,1 @@
-bootloader/boot.bin
-bootloader/boot.img
+bootloader/builds/*

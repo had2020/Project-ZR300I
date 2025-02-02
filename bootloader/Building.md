@@ -10,3 +10,5 @@ dd if=boot.bin of=boot.img conv=notrunc       # write the boot sector to the ima
 
 - testing before flashing
 qemu-system-x86_64 -fda boot.img
+
+## Just USE make
