@@ -1,1 +1,2 @@
-/boot/target
+bootloader/boot.bin
+bootloader/boot.img
